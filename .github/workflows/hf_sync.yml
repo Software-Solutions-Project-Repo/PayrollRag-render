@@ -1,0 +1,17 @@
+name: Sync to Hugging Face Hub
+on:
+  push:
+    branches: [render-deploy] # This tells the robot to wake up only when you push to this branch
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }} # This uses the secret key you'll save in GitHub settings
+        run: git push --force https://k-m-12
+:$HF_TOKEN@huggingface.co/spaces/k-m-12
+/payroll-rag-ui render-deploy:main
