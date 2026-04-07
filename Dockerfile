@@ -1,20 +1,15 @@
 FROM ghcr.io/open-webui/open-webui:main
 
-ENV ENV=prod
-ENV PORT=8080
-ENV OPENAI_API_BASE_URL=""
-ENV OPENAI_API_KEY=""
+# Hugging Face mandatory port
+ENV PORT=7860
+EXPOSE 7860
 
-
-ENV ENABLE_RAG=False
-ENV ENABLE_IMAGE_GENERATION=False
-ENV ENABLE_STT=False
-ENV ENABLE_TTS=False
-ENV ENABLE_AUTOCOMPLETE_GENERATION=False
-ENV ENABLE_TITLE_GENERATION=False
-
-
+# Re-enable RAG for your uni project (16GB RAM is plenty!)
+ENV ENABLE_RAG=True
 ENV WEBUI_AUTH=True
-ENV WORKERS=1
 
-EXPOSE 8080
+# Ensure it doesn't try to run local Ollama (saves RAM)
+ENV ENABLE_OLLAMA_API=False
+
+# Optimization
+ENV ENV=prod
