@@ -1,20 +1,25 @@
 FROM python:3.11-slim
 
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# 2. Clone the repository
-RUN git clone https://github.com/Software-Solutions-Project-Repo/langchain-rag.git .
 
-# 3. Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+
+COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# 4. Expose the port
+# Copy the rest of your local code (instead of git cloning inside)
+git clone https://github.com/Software-Solutions-Project-Repo/langchain-rag.git .
+
 EXPOSE 8001
 
-# 5. Start the application
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]
