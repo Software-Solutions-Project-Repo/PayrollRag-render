@@ -1,20 +1,20 @@
-FROM python:3.11-slim
+FROM ghcr.io/open-webui/open-webui:main
 
-RUN apt-get update && apt-get install -y \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+ENV ENV=prod
+ENV PORT=8080
+ENV OPENAI_API_BASE_URL=""
+ENV OPENAI_API_KEY=""
 
-WORKDIR /app
 
-# 2. Clone the repository
-RUN git clone https://github.com/Software-Solutions-Project-Repo/langchain-rag.git .
+ENV ENABLE_RAG=False
+ENV ENABLE_IMAGE_GENERATION=False
+ENV ENABLE_STT=False
+ENV ENABLE_TTS=False
+ENV ENABLE_AUTOCOMPLETE_GENERATION=False
+ENV ENABLE_TITLE_GENERATION=False
 
-# 3. Install dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
 
-# 4. Expose the port
-EXPOSE 8001
+ENV WEBUI_AUTH=True
+ENV WORKERS=1
 
-# 5. Start the application
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+EXPOSE 8080
