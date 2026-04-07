@@ -1,6 +1,9 @@
-FROM ghcr.io/open-webui/open-webui:dev
-
-ENV HOST=0.0.0.0
-ENV PORT=8080
-
-CMD ["bash", "-c", "env && uvicorn open_webui.main:app --host 0.0.0.0 --port 8080"]
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+volumes:
+  open-webui:
