@@ -1,26 +1,27 @@
 FROM python:3.11-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    HOME=/home/user \
+    PATH=/home/user/.local/bin:$PATH
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-WORKDIR /app
+RUN useradd -m -u 1000 user
+WORKDIR $HOME/app
 
 
-RUN apt-get update && apt-get install -y \
-    git \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+USER root
+RUN apt-get update && apt-get install -y git build-essential && rm -rf /var/lib/apt/lists/*
+
 
 RUN git clone https://github.com/Software-Solutions-Project-Repo/langchain-rag.git .
 
-COPY requirements.txt .
+
+RUN chown -R user:user $HOME/app
+USER user
+
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your local code (instead of git cloning inside)
+EXPOSE 7860
 
-EXPOSE 8001
-
-
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001", "--workers", "1"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
