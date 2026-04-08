@@ -46,4 +46,5 @@ https://k-m-12-payroll-rag-ui.hf.space/
 
 Huggingface spaces free tier puts a site to sleep after **48 hours** of inactivity and delete the current configuration(user accounts and connection to the backend). To avoid this, both sites are using [cron](https://cron-job.org/en/) which pings both sites every 12 hours.
 
+Since there is no persistent storage, users will have to remake credentials after a while
 ...
