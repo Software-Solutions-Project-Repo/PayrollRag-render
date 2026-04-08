@@ -13,5 +13,5 @@ jobs:
       - name: Push to hub
         env:
           HF_BACKEND_TOKEN: ${{secrets.HF_BACKEND_TOKEN }}
-        run: |
+        run:  
           git push -f https://k-m-12:$HF_BACKEND_TOKEN@huggingface.co/spaces/k-m-12/payroll-backend main
