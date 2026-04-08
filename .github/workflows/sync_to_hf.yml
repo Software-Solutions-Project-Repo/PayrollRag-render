@@ -14,4 +14,4 @@ jobs:
         env:
           HF_TOKEN: ${{secrets.HF_BACKEND_TOKEN }}
         run: |
-          git push -f https://<k-m-12>:$HF_TOKEN@huggingface.co/spaces/<k-m-12>/<payroll-backend> main
+          git push -f https://<k-m-12>:$HF_TOKEN@huggingface.co/spaces/k-m-12/payroll-backend main
