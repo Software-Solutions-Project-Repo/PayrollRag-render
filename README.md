@@ -1,6 +1,5 @@
 ---
 title: Payroll Rag Backend
-
 colorFrom: blue
 colorTo: green
 sdk: docker
